@@ -1,0 +1,28 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to HD slider loader
+  </h1>
+  <p>
+    The aim is to load low resolution images first to let your pages load faster. <br/>
+    How it works:<br/>
+    1 : Load low resolution images<br/>
+    2 : Then it loads high resolution images on the background one after another<br/>
+    3 : When an images has his high res image loaded, the src is updated to show the high res image<br/>
+  </p>
+</div>
+<div class="mySlider">
+  <enl-hd-slider-lib [items]="[
+                {
+                    highSrc: '../assets/img1.jpg',
+                    lowSrc: '../assets/apparence.png'
+                },
+                {
+                    highSrc: '../assets/img2.jpg',
+                    lowSrc: '../assets/apparence.png'
+                }
+      ]" #AppSlider></enl-hd-slider-lib>
+</div>
+<div>
+
+</div>

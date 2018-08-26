@@ -1,0 +1,11 @@
+html, p, h1, h2 {
+  font-family: roboto, sans-serif;
+}
+
+.mySlider {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  width: 100vw;
+  left: -11px;
+}
