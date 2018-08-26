@@ -13,9 +13,17 @@ The aim is to load low resolution images first to let your pages load faster.
       2 : Then it loads high resolution images on the background one after another
       3 : When an images has his high res image loaded, the src is updated to show the high res image
 
+## Install
+
+```
+npm i --save hd-slider-lib
+```
+
 ## Use the HdSlider
 Just import the HdSliderModule in your application and BrowserAnimationModule like this :
 ```
+import {HdSliderLibModule} from 'hd-slider-lib';
+
 @NgModule({
   declarations: [
     AppComponent,
