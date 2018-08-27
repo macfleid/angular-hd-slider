@@ -2,11 +2,13 @@ import {AfterViewChecked, AfterViewInit, Component, Inject, Input, OnInit, PLATF
 import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
 import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 import {isPlatformBrowser, isPlatformServer, isPlatformWorkerApp, isPlatformWorkerUi} from '@angular/common';
+import {HdSliderService} from './hd-slider-service';
 
 @Component({
   selector: 'enl-hd-slider-lib',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss'],
+  providers: [HdSliderService],
   animations: [
     trigger('flyInOut', [
       state('in', style({opacity: 1, zIndex: 9})),
@@ -37,6 +39,7 @@ export class HdSliderLibComponent implements OnInit, AfterViewInit, AfterViewChe
   public isStarted = false;
 
   constructor(private _sanitizer: DomSanitizer,
+              private hdSliderService: HdSliderService,
               @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
@@ -59,6 +62,7 @@ export class HdSliderLibComponent implements OnInit, AfterViewInit, AfterViewChe
     if (!this.isStarted && isPlatformBrowser(this.platformId)) {
       this.isStarted = true;
       setTimeout(() => this.startSlider(), 1000);
+      this.loadImagesHighRes(0);
     }
 
   }
@@ -95,20 +99,27 @@ export class HdSliderLibComponent implements OnInit, AfterViewInit, AfterViewChe
     this.items[i].currentImgResolution = SliderItemViewModel.HIGH_RESOL;
   }
 
-  onImageLoaded(i: number) {
-    if (this.items[i].currentImgResolution === SliderItemViewModel.HIGH_RESOL) {
+  loadImagesHighRes(i: number) {
+    if (i >= this.items.length || this.items[i].currentImgResolution === SliderItemViewModel.HIGH_RESOL) {
       return;
     }
-    this.items[i].isLoaded = true;
-    if (this.items.filter((value) => value.isLoaded === true).length === this.items.length) {
-      // start load full res img
-      setTimeout(() => {
-        this.items.forEach((item) => {
-          item.loaderSrc = item.highSrc;
-          item.isLoaded = false;
-        });
-      }, 3000);
-    }
+    this.loadImageSrc(i);
+  }
+
+  loadImageSrc(i: number) {
+    this.hdSliderService.getImageData64(this.items[i].highSrc)
+      .subscribe(
+        (res: Blob) => {
+          const reader = new FileReader();
+          const _this_ = this;
+          reader.onloadend = function() {
+            _this_.items[i].highSrc = reader.result;
+            _this_.onLoaderImageLoaded(i);
+            _this_.loadImagesHighRes(i + 1);
+          }.bind(this);
+          reader.readAsDataURL(res);
+        }
+      );
   }
 
 }
@@ -118,12 +129,12 @@ export class SliderItemViewModel {
   public static IN_STATE = 'in';
   public static LOW_RESOL = 'low';
   public static HIGH_RESOL = 'high';
-  public srcImg?: String;
-  public loaderSrc?: String;
+  public srcImg?: string;
+  public loaderSrc?: string;
   public isLoaded?: boolean;
   public currentImgResolution?: String;
-  public lowSrc?: String;
-  public highSrc?: String;
+  public lowSrc?: string;
+  public highSrc?: string;
   public state?: string;
   public visible?: boolean;
 }

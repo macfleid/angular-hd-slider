@@ -1,7 +1,8 @@
 <ng-container *ngIf="items != null && isPlatformBrowser()">
     <ng-container *ngFor="let item of items; index as i">
+             <!--enlAppOnload (imageLoaded)="onImageLoaded(i)"-->
         <div class="slider-img" *ngIf="item.srcImg"
-             [@flyInOut]="item.state" enlAppOnload (imageLoaded)="onImageLoaded(i)"
+             [@flyInOut]="item.state"
              [style.background-image]="sanitizeImage(item.srcImg)">
         </div>
         <div class="loading-layout" *ngIf="item.currentImgResolution === 'low'">
@@ -9,13 +10,13 @@
             <!--<pre *ngIf="item.srcImg">{{item.srcImg}}</pre>-->
         </div>
     </ng-container>
-    <div class="slider-img-loader-layout">
-        <ng-container *ngFor="let item of items; index as i">
-        <div #imgLoaderDiv
-             *ngIf="item.loaderSrc != null"
-             class="slider-img-loader"
-             enlAppOnload (imageLoaded)="onLoaderImageLoaded(i)"
-             [style.background-image]="sanitizeImage(item.loaderSrc)" id="imgLoaderView"></div>
-        </ng-container>
-    </div>
+    <!--<div class="slider-img-loader-layout">-->
+        <!--<ng-container *ngFor="let item of items; index as i">-->
+        <!--<div #imgLoaderDiv-->
+             <!--*ngIf="item.loaderSrc != null"-->
+             <!--class="slider-img-loader"-->
+             <!--enlAppOnload (imageLoaded)="onLoaderImageLoaded(i)"-->
+             <!--[style.background-image]="sanitizeImage(item.loaderSrc)" id="imgLoaderView"></div>-->
+        <!--</ng-container>-->
+    <!--</div>-->
 </ng-container>

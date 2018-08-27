@@ -5,3 +5,4 @@
 export * from './lib/hd-slider-lib.component';
 export * from './lib/hd-slider-lib.module';
 export * from './lib/onload.directive';
+export * from './lib/hd-slider-service';

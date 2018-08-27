@@ -1,8 +1,12 @@
 {
   "name": "hd-slider-lib",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": ["angular","slider","images"],
   "homepage": "https://github.com/macfleid/angular-hd-slider",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/macfleid/angular-hd-slider"
+  },
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
